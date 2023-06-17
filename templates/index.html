@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tree Assessment</title>
+    <a href="/download_excel">Download Excel</a>
+    <p><a href="/view_data">View Submitted Data</a></p>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Tree Assessment Form</h2>
+    <form id="treeForm">
+        <!-- All your input fields here -->
+
+        
+
+        <label for="serialNumber">Tree Serial Number</label>
+        <input type="text" id="serialNumber" name="serialNumber" required>
+
+        <label for="companyName">Company Name</label>
+        <input type="text" id="companyName" name="companyName" required>
+
+        <label for="projectName">Project Name</label>
+        <input type="text" id="projectName" name="projectName" required>
+
+        <label for="treePhoto">Tree Photo</label>
+        <input type="file" accept="image/*" id="uploadPhoto" name="uploadPhoto"><br><br>
+        
+
+        <label for="treeID">Tree ID number</label>
+        <input type="text" id="treeID" name="treeID" required>
+
+        <label for="treeHeight">Tree Height</label>
+        <input type="text" id="treeHeight" name="treeHeight" required>
+
+        <label for="treeCoordinates">Tree Coordinates</label>
+        <input type="text" id="treeCoordinates" name="treeCoordinates" required>
+
+        <label for="treeCondition">Tree Condition</label>
+        <textarea id="treeCondition" name="treeCondition" required></textarea>
+
+        <label for="assessorRemarks">Assessor Remarks</label>
+        <textarea id="assessorRemarks" name="assessorRemarks" required></textarea>
+
+        <label for="assessmentDate">Assessment Date</label>
+        <input type="date" id="assessmentDate" name="assessmentDate" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        $('#treeForm').on('submit', function(e) {
+            e.preventDefault(); // Prevent form from being submitted normally
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: "http://127.0.0.1:5000/submit_form",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    alert("Form submitted successfully!");
+                    $('#treeForm')[0].reset(); // Add this line to reset the form
+                },
+                error: function(xhr, status, error) {
+                    alert("An error occurred while submitting the form. Please try again.");
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
